@@ -20,20 +20,25 @@ class tree_node {
     typedef typename allocator_type::reference       reference;
     typedef typename allocator_type::const_reference const_reference;
 
+    using parent_pointer = std::weak_ptr< tree_node< data_type, allocator_type > >;
+
 public:
     tree_node()
+        : m_parent( nullptr )
     {
 
     }
 
     tree_node( const tree_node< data_type >& other )
-        : m_data( other )
+        : m_data  ( other )
+        , m_parent( other.m_parent )
     {
 
     }
 
     tree_node( tree_node< data_type >&& other )
-        : m_data( std::move( other ) )
+        : m_data ( std::move( other ) )
+        , m_paret(  )
     {
         
     }
@@ -72,15 +77,16 @@ public:
 
 private:
 
-    data_type m_data;
+    data_type      m_data;
+    parent_pointer m_parent;
 
 };
 
 /**
- * @brief 
+ * @brief Base tree collection class.
  * 
- * @tparam  T [description]
- * @tparam Allocator = std::T >  [description]
+ * @tparam  T Data type.
+ * @tparam Allocator Allocator type
  */
 template< typename T, typename Allocator = std::allocator< T > >
 class basic_tree {
