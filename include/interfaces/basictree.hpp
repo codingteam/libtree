@@ -6,6 +6,8 @@
 
 #include "iterator.hpp"
 
+namespace treecxx {
+
 /**
  * @brief 
  * 
@@ -20,7 +22,7 @@ class tree_node {
     typedef typename allocator_type::reference       reference;
     typedef typename allocator_type::const_reference const_reference;
 
-    using parent_pointer = std::weak_ptr< tree_node< data_type, allocator_type > >;
+    using node_pointer = std::weak_ptr< tree_node< data_type, allocator_type > >;
 
 public:
     tree_node()
@@ -75,10 +77,10 @@ public:
     }
 
 
-private:
+protected:
 
-    data_type      m_data;
-    parent_pointer m_parent;
+    data_type    m_data;
+    node_pointer m_parent;
 
 };
 
@@ -215,3 +217,5 @@ protected:
     std::unique_ptr< tree_node< data_type, allocator_type > > m_root;
 
 };
+
+} // treecxx
